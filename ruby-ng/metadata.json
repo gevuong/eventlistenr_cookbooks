@@ -1,0 +1,32 @@
+{
+  "name": "ruby-ng",
+  "description": "Installs Ruby from brightbox/ruby-ng PPA",
+  "long_description": "ruby-ng\n=======\n\nInstalls Ruby from https://launchpad.net/~brightbox/+archive/ruby-ng\n\nRequirements\n------------\n\nPlatform: Ubuntu\n\nCookbooks:\n - `apt`\n - `build-essential` (included by `ruby-ng::dev` recipe)\n\nRecipes\n-------\n\n - `ruby-ng::default` (`ruby-ng`) - installs Ruby runtime\n - `ruby-ng::dev` - installs Ruby runtime and development libraries\n\nAttributes\n----------\n\n - `ruby-ng::experimental` (default: false) - use `ruby-ng-experimental` PPA\n - `ruby-ng::ruby_version` (default: 2.1) - Ruby version to install\n\nLicense and Authors\n-------------------\nAuthors: Maciej Pasternacki <maciej@3ofcoins.net>\nLicense: MIT\n",
+  "maintainer": "Maciej Pasternacki",
+  "maintainer_email": "maciej@3ofcoins.net",
+  "license": "MIT",
+  "platforms": {
+    "ubuntu": ">= 0.0.0"
+  },
+  "dependencies": {
+    "apt": ">= 0.0.0",
+    "build-essential": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.3.0"
+}

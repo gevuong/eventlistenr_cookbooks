@@ -1,9 +1,9 @@
 # deploy script here
-service "eventlistenr" do
+service "spooky" do
   action [:stop]
 end
 
-directory "#{node[:eventlistenr][:path]}" do
+directory "#{node[:spooky][:path]}" do
   owner 'ubuntu'
   group 'ubuntu'
   mode '0755'
@@ -12,16 +12,16 @@ directory "#{node[:eventlistenr][:path]}" do
 end
 
 # deploy script here
-git "#{node[:eventlistenr][:path]}" do
-  repository node[:eventlistenr][:git_repository]
-  revision node[:eventlistenr][:git_revision]
+git "#{node[:spooky][:path]}" do
+  repository node[:spooky][:git_repository]
+  revision node[:spooky][:git_revision]
   environment ({"HOME"=>"/home/ubuntu"})
   action :sync
   user "ubuntu"
 end
 
 execute "Install Gems" do
-  cwd node[:eventlistenr][:path]
+  cwd node[:spooky][:path]
   command "bundle install"
   user "ubuntu"
   # group new_resource.group
@@ -30,7 +30,7 @@ execute "Install Gems" do
 end
 
 execute "Install NPM packages" do
-  cwd node[:eventlistenr][:path]
+  cwd node[:spooky][:path]
   command "npm install"
   user "ubuntu"
   # group new_resource.group
@@ -39,26 +39,26 @@ execute "Install NPM packages" do
 end
 
 execute "Compile Webpack Assets" do
-  cwd node[:eventlistenr][:path]
+  cwd node[:spooky][:path]
   command "./node_modules/.bin/webpack"
   environment ({"NODE_ENV": "production", "HOME": "/home/ubuntu"})
   user "ubuntu"
 end
 
 execute "Clobber Rails Assets" do
-  cwd node[:eventlistenr][:path]
+  cwd node[:spooky][:path]
   command "bundle exec rake assets:clobber"
   environment ({"RAILS_ENV": "production", "HOME": "/home/ubuntu"})
   user "ubuntu"
 end
 
 execute "Compile Rails Assets" do
-  cwd node[:eventlistenr][:path]
+  cwd node[:spooky][:path]
   command "bundle exec rake assets:precompile"
   environment ({"RAILS_ENV": "production", "HOME": "/home/ubuntu"})
   user "ubuntu"
 end
 
-service "eventlistenr" do
+service "spooky" do
   action [ :enable, :start ]
-end
+end 
