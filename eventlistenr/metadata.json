@@ -8,6 +8,7 @@
   "platforms": {
   },
   "dependencies": {
+    "apt": "= 6.1.4",
     "ruby-ng": ">= 0.0.0",
     "nodejs": ">= 0.0.0",
     "postgres": ">= 0.0.0",
