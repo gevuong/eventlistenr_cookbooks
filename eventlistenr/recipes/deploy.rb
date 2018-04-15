@@ -1,4 +1,13 @@
 # deploy script here
+
+=begin
+For each deploy, we will:
+1. Stop existing service
+2. Create a directory
+3. Git checkout latest version of master branch
+4. Install all dependencies
+5. Restart service
+=end
 service "eventlistenr" do
   action [:stop]
 end
@@ -12,6 +21,8 @@ directory "#{node[:eventlistenr][:path]}" do
 end
 
 # deploy script here
+
+# Git chef resource allows you to checkout a git repo by passing branches/commit hash in as attributes/custom JSON.
 git "#{node[:eventlistenr][:path]}" do
   repository node[:eventlistenr][:git_repository]
   revision node[:eventlistenr][:git_revision]
@@ -20,6 +31,7 @@ git "#{node[:eventlistenr][:path]}" do
   user "ubuntu"
 end
 
+# bundle install, npm install, compile static webpack and rails assets. If CDN is used, you can avoid these steps. 
 execute "Install Gems" do
   cwd node[:eventlistenr][:path]
   command "bundle install"

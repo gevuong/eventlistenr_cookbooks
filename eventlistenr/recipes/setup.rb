@@ -1,15 +1,18 @@
 # setup script here
 
-include_recipe "ruby-ng::dev"
-include_recipe "nodejs"
-include_recipe "nodejs::npm"
-include_recipe "postgres"
-include_recipe "nginx"
-include_recipe "unicorn"
+# These 6 lines are used to run recipes in other cookbooks
+include_recipe "ruby-ng::dev" # installs Ruby v2 and above
+include_recipe "nodejs" # installs nodejs
+include_recipe "nodejs::npm" # install npm
+include_recipe "postgres" # installs postgres client libraries
+include_recipe "nginx" # installs nginx w/ default settings
+include_recipe "unicorn" # installs unicorn
 
+# machine level dependencies needed to be installed to prepare machine for running your app
 apt_package 'zlib1g-dev'
 apt_package 'libpq-dev'
 
+# init.d is a service that enables easy starting and stopping of a long running application
 template "eventlistenr_service" do
     path "/etc/init.d/eventlistenr"
     source "eventlistenr_service.erb"
@@ -23,6 +26,7 @@ service "eventlistenr" do
   action [ :enable ]
 end
 
+# We are using Nginx as our web server. Nginx reads config files that are "symlinked" from /nginx/sites_available
 template "#{node['nginx']['dir']}/sites-available/eventlistenr" do
   source 'eventlistenr_site.erb'
   notifies :reload, 'service[nginx]', :delayed
@@ -32,6 +36,7 @@ nginx_site 'eventlistenr' do
   action :enable
 end
 
+# We are using Unicorn as our production app server. Unicorn starts multiple instances of app, and monitors them for failure. Unicorn talks with Nginx over Unix sockets. We create a directory to store Unix socket.
 directory '/tmp/sockets/' do
   owner 'root'
   group 'root'

@@ -1,3 +1,4 @@
+# defaults are declared in this file
 default['ruby-ng']['ruby_version'] = "2.4"
 default['nodejs']['version'] = "6.10.1"
 default['nodejs']['npm']['version'] = "5.2.0"
