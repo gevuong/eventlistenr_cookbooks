@@ -1,12 +1,9 @@
 ## Intro to DevOps
 
-
-
-
 ### Week 2 Day 1, Monday, April 9th, 2018
 
 #### What is Chef?
-- A scalable automation platform that configures and manages infrastructure, like hardware.
+- An automation platform that configures and manages infrastructure, like hardware.
 - Turns infrastructure into code. Well, what does that mean?
 
 #### How does Chef work?
@@ -46,13 +43,15 @@
 
 - In the grander scheme, OpsWorks integrates with the lifecycle of AWS EC2 instances.
 
-- OpsWorks Lifecycle consists of the following.
+- OpsWorks triggers events during an application lifecycle, such as when an instance is setup, or an app is deployed. The OpsWorks lifecycle events consist of the following.
     1. setup
     2. configure
     3. deploy
     4. undeploy
     5. shutdown
 
+
+- **You can perform specific configuration tasks using Chef recipes that are attached to those events.**
 
 - We're focusing on 2 of the 5 lifecycles with two written recipes, or scripts:
     - ```setup.rb```, which contains 5 things:
@@ -65,8 +64,12 @@
         1. Git (allows Git checkout of latest version of Master branch)
         2. dependency installs (i.e. bundle, npm, compile webpack and rails assets)
 
+- There are multiple ways to deploy apps on AWS, such as Elastic Beanstalk, CloudFormation, EC2. And OpsWorks is other option.
+    - It all comes down to level of convenience.
+
+![AWS App Management Services](images/aws_app_management_services.png)
 
 
-**...more info to come.**
 
-[AWS OpsWorks Overview and Demo](https://www.youtube.com/watch?v=cj_LoG6C2xk) - 15min YT video
+### Additional Resources
+[AWS OpsWorks Overview and Demo w/ Chef](https://www.youtube.com/watch?v=cj_LoG6C2xk) - 15min YT video
